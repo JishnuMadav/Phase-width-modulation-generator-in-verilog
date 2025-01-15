@@ -21,33 +21,33 @@
 
 
 module pwm_generator (
-    input wire clk,          // System clock
-    input wire reset,        // Active high reset
-    input wire [15:0] duty,  // Configurable duty cycle (0-65535)
-    input wire [31:0] freq,  // Configurable frequency in Hz
-    output reg pwm_out       // PWM output
+    input wire clk,          
+    input wire reset,       
+    input wire [15:0] duty,  
+    input wire [31:0] freq,  
+    output reg pwm_out      
 );
 
-    // Parameters
-    parameter CLOCK_FREQ = 100_000_000; // System clock frequency in Hz (e.g., 100 MHz)
+    
+    parameter CLOCK_FREQ = 100_000_000; 
 
-    // Internal registers
+ 
     reg [31:0] counter;
     reg [31:0] compare_value;
     reg [31:0] period;
 
-    // Calculate period and compare value based on frequency and duty cycle
+    
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             period <= 0;
             compare_value <= 0;
         end else begin
-            period <= CLOCK_FREQ / freq;                  // Compute period from frequency
-            compare_value <= (duty * period) >> 16;      // Compute compare value (scaled by duty cycle)
+            period <= CLOCK_FREQ / freq;                  
+            compare_value <= (duty * period) >> 16;     
         end
     end
 
-    // PWM generation logic
+    
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             counter <= 0;
@@ -59,7 +59,7 @@ module pwm_generator (
                 counter <= 0; // Reset counter at the end of the period
             end
 
-            // Generate PWM output based on compare value
+            
             pwm_out <= (counter < compare_value) ? 1 : 0;
         end
     end
