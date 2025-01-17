@@ -4,8 +4,7 @@ This Verilog module implements a Pulse Width Modulation (PWM) generator. It take
 The duty cycle input, specified as an integer between 0 and 
 2
 dutywidth
-2 
-dutywidth
+
  , determines the percentage of time the PWM signal remains high during each cycle. The dutywidth parameter is user-configurable, allowing for adjustments to the resolution of the PWM signal.
 
 The PWM signal is generated as a square wave, with its duty cycle corresponding to the specified input value. Additionally, the module outputs a cycle signal, which goes high for a single clock cycle at the end of each PWM cycle, indicating the completion of a cycle.
